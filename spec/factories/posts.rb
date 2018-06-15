@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :post do
-    content "MyString"
-    timestamp "2018-06-15 13:13:44"
+    sequence(:content) {|n| "I've composed #{n} post"}
+    timestamp {DateTime.current}
   end
 end
