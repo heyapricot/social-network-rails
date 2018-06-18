@@ -11,4 +11,9 @@ RSpec.describe Post, type: :model do
     expect(post.users_who_liked).to include(other)
   end
 
+  it "Can keep track of the users who viewed the post" do
+    post.users_who_viewed << other
+    expect(post.users_who_viewed).to include(other)
+  end
+
 end
