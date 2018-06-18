@@ -24,6 +24,25 @@ RSpec.describe User, type: :model do
 
   end
 
+  it "can get all the posts made by friends" do
+    friend_quantity = 4
+    post_quantity = 2
+
+    friends = Array.new
+    posts = Array.new
+
+    friend_quantity.times {friends << FactoryBot.create(:user)}
+    friends.each {|f| post_quantity.times {posts << FactoryBot.create(:post, user_id: f.id)} }
+
+    user.friends << friends
+
+    feed = user.friends_posts
+
+    expect(feed.length).to eq (friend_quantity * post_quantity)
+    expect(feed).to match_array(posts)
+
+  end
+
   context "when accepting a friend request" do
 
     user = FactoryBot.create(:user)
