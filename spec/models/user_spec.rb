@@ -18,9 +18,9 @@ RSpec.describe User, type: :model do
 
     friend_request_num.times {friends << FactoryBot.create(:user)}
 
-    user.friend_requests << friends
+    user.requesters << friends
 
-    expect(user.friend_requests).to match_array(friends)
+    expect(user.requesters).to match_array(friends)
 
   end
 
@@ -43,13 +43,35 @@ RSpec.describe User, type: :model do
 
   end
 
+  it "can get all the posts made by friends that the user haven't seen" do
+    friend_quantity = 4
+    post_quantity = 2
+
+    friends = Array.new
+    posts = Array.new
+    unseen_posts = Array.new
+
+    friend_quantity.times {friends << FactoryBot.create(:user)}
+    friends.each do |f|
+      post_quantity.times {posts << FactoryBot.create(:post, user_id: f.id)}
+      f.posts.first.viewers << user
+      unseen_posts << f.posts.second
+    end
+
+    user.friends << friends
+
+    expect(unseen_posts.length).to eq (friend_quantity)
+    expect(unseen_posts).to match_array(unseen_posts)
+
+  end
+
   context "when accepting a friend request" do
 
     user = FactoryBot.create(:user)
     friend = FactoryBot.create(:user)
 
     before(:all) do
-      user.friend_requests << friend
+      user.requesters << friend
       user.friendship_requests.find_by(friend_id: friend.id).accept
     end
 
