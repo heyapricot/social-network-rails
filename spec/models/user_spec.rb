@@ -2,8 +2,14 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
+  friend_quantity = 4
+
   let(:user){FactoryBot.create(:user)}
   let(:friends){FactoryBot.create_list(:user,4)}
+    ar = Array.new
+    friend_quantity.times { ar << FactoryBot.create(:user) }
+    ar
+  end
 
   describe "friendships" do
     it "can get a list of Users that are friends" do
@@ -15,7 +21,6 @@ RSpec.describe User, type: :model do
     it "can get a list of friend requests and the requesters" do
       friend = friends.first
       user.requesters << friend
-
       expect(user.friend_requests.where(friend: friend).length).to be 1
       expect(user.friend_requests.where(friend: friend).first.friend).to eq friend
     end
@@ -33,7 +38,6 @@ RSpec.describe User, type: :model do
       it "updates user.friends with the friend that sent the request" do
         expect(user.friends).to include(friend)
       end
-
       it "updates friend.friends with the friend that sent the request" do
         expect(friend.friends).to include(user)
       end
@@ -43,19 +47,14 @@ RSpec.describe User, type: :model do
       end
 
     end
-
-
   end
 
   describe "posts" do
     before {friends.each{|f| f.friendships.create(friend: user, status: :accepted)}}
-
     it "can create a post" do
       content = "Test post"
       user.posts.create(content: content)
       expect(user.posts.first.content).to eq content
-    end
-
     it "can get a list of friend's posts" do
       posts = []
       content = "Test post"
@@ -73,6 +72,9 @@ RSpec.describe User, type: :model do
       expect(user.unseen_posts).to match_array(unseen_posts)
     end
 
+      friend = friends.first
+      user.requesters << friend
+      user.friendship_requests.find_by(friend_id: friend.id).accept
   end
 
 end
