@@ -2,8 +2,14 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
+  friend_quantity = 4
+
   let(:user){FactoryBot.create(:user)}
   let(:friends){FactoryBot.create_list(:user,4)}
+    ar = Array.new
+    friend_quantity.times { ar << FactoryBot.create(:user) }
+    ar
+  end
 
   describe "friendships" do
     it "can get a list of Users that are friends" do
