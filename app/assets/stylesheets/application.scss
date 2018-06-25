@@ -17,6 +17,19 @@
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 
+//Globals
+
 body {
   background: #373B44;
+  color: #DEE1B6;
+}
+
+a{
+  color: #73C8A9;
+}
+
+.btn-primary {
+  color: #DEE1B6;
+  background-color: #BD5532;
+  border-color: #BD5532
 }
