@@ -1,12 +1,9 @@
 <nav class="navbar navbar-light fixed-top" style="background-color: #73C8A9">
-  <% if current_user %>
-    <%= link_to (icon('fas', 'feather', 'Chronicle')), root_path, :class => "navbar-brand"   %>
-  <% else %>
-    <%= link_to (icon('fas', 'feather', 'Chronicle')), root_path, :class => "navbar-brand"   %>
-  <% end %>
+  <%= link_to (icon('fas', 'feather', 'Chronicle')), root_path, :class => "navbar-brand"   %>
 
   <div class="navbar-nav d-flex flex-row">
     <% if current_user %>
+      <%= link_to "Hello, #{current_user.first_name}", "#", :class => "nav-item nav-link mr-3" %>
       <%= link_to "Log out", destroy_user_session_path , method: :delete, :class => "nav-item nav-link mr-3" %>
 
     <% else %>
