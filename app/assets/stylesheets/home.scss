@@ -2,7 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .home {
-  height: 100vh;
-  background-image: url("chronicle_home.png");
-  background-size: cover;
+  height: 85vh;
+  background-image: url("chronicle_home_transparent.png");
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
