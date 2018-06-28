@@ -20,4 +20,8 @@ class User < ApplicationRecord
     Post.where(author: self.friends) - Post.joins(:views).where(author: self.friends)
   end
 
+  def fullname
+    "#{first_name} #{last_name}"
+  end
+
 end

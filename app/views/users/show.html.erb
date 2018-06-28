@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row mb-3">
     <div class="col-lg">
       <div class="card profile-top">
         <div class="card-body">
@@ -18,9 +18,9 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg">
-      <%#= render partial: "posts/post", collection: @user.posts %>
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <%= render partial: "posts/post", collection: @user.posts %>
     </div>
   </div>
 </div>

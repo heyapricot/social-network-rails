@@ -1,0 +1,29 @@
+<div class="card post mb-3">
+  <div class="card-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-2">
+          <%= image_tag("chronicle_home_transparent.png", :class => "img-fluid") %>
+        </div>
+        <div class="col d-flex flex-column justify-content-center">
+          <%= content_tag(:div, post.author.fullname)%>
+          <%= content_tag(:div, post.created_at.to_formatted_s(:long))%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="list-group list-group-flush">
+    <div class="list-group-item">
+      <%= post.content %>
+    </div>
+    <div class="list-group-item d-flex justify-content-between">
+      <%= link_to "Like", "#", :class => "btn btn-primary" %>
+      <%= link_to "Comment", "#", :class => "btn btn-primary" %>
+      <%= link_to "Share", "#", :class => "btn btn-primary" %>
+    </div>
+  </div>
+
+  <div class="card-footer">
+
+  </div>
+</div>
