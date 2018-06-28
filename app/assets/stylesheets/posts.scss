@@ -2,22 +2,8 @@
   background-color: #373B44;
   border-color: #E1B866;
 
-  .list-group-item, .card-header, .card-footer {
+  .list-group-item, .card-header {
     background-color: transparent;
     border-color: #E1B866;
   }
-
-  textarea, .form-control {
-    resize: none;
-    background-color: transparent;
-    border: none;
-  }
-
-  textarea:focus, .form-control:focus {
-    background-color: transparent;
-    color: #DEE1B6;
-    border-color: #E1B866;
-    box-shadow: 0 0 0 0.2rem rgba(255,184,102,0.25);
-  }
-
 }
