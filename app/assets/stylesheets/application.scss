@@ -10,12 +10,12 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require home
  */
 
 @import 'bootstrap';
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+@import 'users';
 
 //Globals
 
@@ -33,3 +33,6 @@ a{
   background-color: #BD5532;
   border-color: #BD5532
 }
+
+//User show page
+
