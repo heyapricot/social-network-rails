@@ -1,0 +1,11 @@
+<div class="card post mb-3">
+  <div class="card-body">
+    <%= form_for @post, url: posts_path, method: :post do |f| %>
+      <%= f.text_area :content, :class => "form-control", :value => "What's on your mind?"%>
+      </div>
+      <div class="card-footer d-flex justify-content-end">
+      <%= f.submit "Post", :class => "btn btn-primary btn-sm" %>
+      </div>
+    <% end %>
+
+</div>

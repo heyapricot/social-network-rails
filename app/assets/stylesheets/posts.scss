@@ -2,8 +2,20 @@
   background-color: #373B44;
   border-color: #E1B866;
 
-  .list-group-item, .card-header {
+  .list-group-item, .card-header, .card-footer {
     background-color: transparent;
+    border-color: #E1B866;
+  }
+
+  textarea {
+    resize: none;
+    background-color: transparent;
+    border: none;
+  }
+
+  textarea:focus {
+    background-color: transparent;
+    color: #DEE1B6;
     border-color: #E1B866;
   }
 }
