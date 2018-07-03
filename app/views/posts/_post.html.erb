@@ -16,10 +16,9 @@
     <div class="list-group-item">
       <%= post.content %>
     </div>
-    <div class="list-group-item d-flex justify-content-between">
-      <%= link_to "Like", "#", :class => "btn btn-primary btn-sm" %>
-      <%= link_to "Comment", "#", :class => "btn btn-primary btn-sm" %>
-      <%= link_to "Share", "#", :class => "btn btn-primary btn-sm" %>
+    <div class="list-group-item d-flex justify-content-around">
+      <%= link_to icon('fas','thumbs-up', 'Like'), "#", :class => "btn btn-primary btn-sm" %>
+      <%= link_to icon('fas','comment', 'Comment'), "#", :class => "btn btn-primary btn-sm" %>
     </div>
   </div>
 
