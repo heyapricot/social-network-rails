@@ -1,4 +1,4 @@
-<div class="card post mb-3">
+<div class="card post mb-3" id=<%= "post-#{post.id}" %>>
   <div class="card-header">
     <div class="container">
       <div class="row">
@@ -17,7 +17,7 @@
       <%= post.content %>
     </div>
     <div class="list-group-item d-flex justify-content-around">
-      <%= link_to icon('fas','thumbs-up', 'Like'), "#", :class => "btn btn-primary btn-sm" %>
+      <%= link_to icon('fas','thumbs-up', 'Like'), post_likes_path(post), :class => "btn btn-primary btn-sm", :method => :post %>
       <%= link_to icon('fas','comment', 'Comment'), "#", :class => "btn btn-primary btn-sm" %>
     </div>
     <% unless post.likes.count <= 0 %>
