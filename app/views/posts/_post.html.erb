@@ -20,6 +20,11 @@
       <%= link_to icon('fas','thumbs-up', 'Like'), "#", :class => "btn btn-primary btn-sm" %>
       <%= link_to icon('fas','comment', 'Comment'), "#", :class => "btn btn-primary btn-sm" %>
     </div>
+    <% unless post.likes.count <= 0 %>
+    <div class="list-group-item">
+      <%= icon("fas","thumbs-up", displayLikers(post)) %>
+    </div>
+    <% end %>
   </div>
 
   <div class="card-footer">
