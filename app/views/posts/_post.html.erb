@@ -25,6 +25,12 @@
       <%= icon("fas","thumbs-up", displayLikers(post)) %>
     </div>
     <% end %>
+    <div class="list-group-item">
+      <%= form_for :comment, :url => post_comments_path(post) do |f| %>
+        <%= f.text_field :content %>
+        <%= f.submit "Comment", :class => "btn btn-primary btn-sm"  %>
+      <% end %>
+    </div>
     <% unless post.comments.count <= 0 %>
     <div class="list-group-item" style="height: 140px; overflow-y: scroll">
       <%= render partial: "comments/comment", collection: post.comments  %>
