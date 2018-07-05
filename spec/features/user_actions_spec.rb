@@ -6,8 +6,13 @@ RSpec.feature "UserActions", type: :feature do
   before(:each) { login_as(user, :scope => :user) }
 
   scenario "Visit user show page" do
+
+    post = user.posts.create(content: "Capybarita")
+
     visit user_path(user.id)
+
     expect(page).to have_text(user.first_name)
+    expect(page).to have_text(post.content)
   end
 
   pending "Create a post from the current user's show page" do
