@@ -38,7 +38,7 @@
       <% end %>
     </div>
     <% unless post.comments.count <= 0 %>
-    <div class="list-group-item" style="height: 140px; overflow-y: scroll">
+    <div class="list-group-item" style="max-height: 140px; overflow-y: auto">
       <%= render partial: "comments/comment", collection: post.comments  %>
     </div>
     <% end %>
