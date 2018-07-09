@@ -7,7 +7,7 @@ RSpec.feature "UserActions", type: :feature do
 
   scenario "Visit user show page" do
 
-    post = user.posts.create(content: "Capybarita")
+    post = user.posts.create(content: "Test Post")
 
     visit user_path(user.id)
 
@@ -15,12 +15,23 @@ RSpec.feature "UserActions", type: :feature do
     expect(page).to have_text(post.content)
   end
 
-  pending "Create a post from the current user's show page" do
-    test_text = "This is a test"
+  scenario "Create a comment on a post froma user page" do
+    post = user.posts.create(content: "Test Post")
+    comment = "This is a comment"
     visit user_path(user.id)
-    fill_in "post_content", with: test_text
+    fill_in "comment_content", with: comment
+    click_button "Comment"
+    save_and_open_page
+    expect(page).to have_text(comment)
+  end
+
+  pending "Create a post from the current user's show page" do
+    text = "This is a test"
+    visit user_path(user.id)
+    fill_in "post_content", with: text
     click_button "Post"
-    expect(page).to have_text(test_text)
+    save_and_open_page
+    expect(page).to have_text(text)
   end
 
 end

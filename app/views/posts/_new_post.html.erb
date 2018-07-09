@@ -1,7 +1,7 @@
 <div class="card post mb-3">
   <div class="card-body">
     <%= form_for :post, url: user_posts_path(current_user) do |f| %>
-      <%= f.text_area :content, :class => "form-control", :value => "What's on your mind?"%>
+      <%= f.text_field :content, :class => "form-control", :placeholder => "What's on your mind?"%>
       </div>
       <div class="card-footer d-flex justify-content-end">
       <%= f.submit "Post", :class => "btn btn-primary btn-sm" %>
