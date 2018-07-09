@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :home, only: :index
-  resources :users, only: %i[show] do
+  resources :users, only: %i[show index] do
     resources :posts, only: %i[create]
   end
   resources :posts, only: %i[create] do

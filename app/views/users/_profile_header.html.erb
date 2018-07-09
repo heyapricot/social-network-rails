@@ -1,0 +1,23 @@
+<div class="row mb-3">
+  <div class="col-lg">
+    <div class="card profile-top">
+      <div class="card-body">
+        <div class="row justify-content-end">
+          <div class="col-lg-2">
+            <div class="profile-pic-square">
+              <%= image_tag("chronicle_home_transparent.png", :class => "img-fluid") %>
+            </div>
+          </div>
+          <div class="col-lg-10 d-flex align-items-end">
+            <% if @user.nil? %>
+              <h3 class="card-title"><%= "#{current_user.first_name} #{current_user.last_name}" %></h3>
+          <% else %>
+              <h3 class="card-title"><%= "#{@user.first_name} #{@user.last_name}" %></h3>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer"></div>
+    </div>
+  </div>
+</div>
