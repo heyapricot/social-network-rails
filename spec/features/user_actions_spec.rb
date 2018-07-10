@@ -15,6 +15,15 @@ RSpec.feature "UserActions", type: :feature do
     expect(page).to have_text(post.content)
   end
 
+  scenario "User sends a friend request from index page" do
+    friend = FactoryBot.create(:user)
+
+    visit users_path
+    click_link "Add Friend"
+    expect(friend.requesters.include?(user)).to be(true)
+    expect(page).to have_text("Requested")
+  end
+
   scenario "Create a comment on a post froma user page" do
     post = user.posts.create(content: "Test Post")
     comment = "This is a comment"
