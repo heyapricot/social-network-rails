@@ -12,15 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20180711181935) do
 
-  create_table "friendship_requests", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "friend_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["friend_id"], name: "index_friendship_requests_on_friend_id"
-    t.index ["user_id"], name: "index_friendship_requests_on_user_id"
-  end
-
   create_table "friendships", force: :cascade do |t|
     t.integer "user_id"
     t.integer "friend_id"
