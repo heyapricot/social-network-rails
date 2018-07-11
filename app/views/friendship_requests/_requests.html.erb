@@ -1,0 +1,5 @@
+<div class="d-flex align-items-center mb-3">
+  <%= image_tag("chronicle_home_transparent.png", :class => "img-fluid mr-3", style: "width: 100px") %>
+  <%= link_to "#{user.fullname}", user_path(user), :class => "mr-auto" %>
+  <%= link_to icon('fas','plus', 'Add Friend'), user_friendship_requests_path(user), :class => "btn btn-primary btn-sm", :method => :post %>
+</div>

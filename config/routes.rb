@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :home, only: :index
   resources :users, only: %i[show index] do
     resources :posts, only: %i[create]
-    resources :friendship_requests, only: %i[create]
+    resources :friendship_requests, only: %i[index create]
   end
   resources :posts, only: %i[create] do
     resources :comments, only: %i[create], controller: :post_actions
