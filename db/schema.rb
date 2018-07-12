@@ -22,15 +22,6 @@ ActiveRecord::Schema.define(version: 20180712204302) do
     t.index ["user_id"], name: "index_friendships_on_user_id"
   end
 
-  create_table "likes", force: :cascade do |t|
-    t.integer "post_id"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_likes_on_post_id"
-    t.index ["user_id"], name: "index_likes_on_user_id"
-  end
-
   create_table "post_actions", force: :cascade do |t|
     t.integer "post_id"
     t.integer "user_id"
@@ -57,15 +48,6 @@ ActiveRecord::Schema.define(version: 20180712204302) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "views", force: :cascade do |t|
-    t.integer "post_id"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_views_on_post_id"
-    t.index ["user_id"], name: "index_views_on_user_id"
   end
 
 end
