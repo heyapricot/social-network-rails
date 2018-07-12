@@ -12,16 +12,12 @@ RSpec.describe User, type: :model do
     expect(user.posts.length).to eq(post_quantity)
   end
 
-  it "can receive and store users as friend requests" do
-    friends = Array.new
-    friend_request_num = 3
+  it "can get a list of friend requests and the requesters" do
+    friend = FactoryBot.create(:user)
+    user.requesters << friend
 
-    friend_request_num.times {friends << FactoryBot.create(:user)}
-
-    user.requesters << friends
-
-    expect(user.requesters).to match_array(friends)
-
+    expect(user.friend_requests.where(friend: friend).length).to be 1
+    expect(user.friend_requests.where(friend: friend).first.friend).to eq friend
   end
 
   it "can get all the posts made by friends" do
@@ -63,14 +59,6 @@ RSpec.describe User, type: :model do
     expect(unseen_posts.length).to eq (friend_quantity)
     expect(unseen_posts).to match_array(unseen_posts)
 
-  end
-
-  it "Can get a list of friend requests" do
-    friend = FactoryBot.create(:user)
-    user.requesters << friend
-
-    expect(user.friend_requests.where(friend: friend).length).to be 1
-    expect(user.friend_requests.where(friend: friend).first.friend).to eq friend
   end
 
   context "when accepting a friend request" do
