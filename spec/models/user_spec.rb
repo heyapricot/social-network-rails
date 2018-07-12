@@ -65,14 +65,22 @@ RSpec.describe User, type: :model do
 
   end
 
+  it "Can get a list of friend requests" do
+    friend = FactoryBot.create(:user)
+    user.requesters << friend
+
+    expect(user.friend_requests.where(friend: friend).length).to be 1
+    expect(user.friend_requests.where(friend: friend).first.friend).to eq friend
+  end
+
   context "when accepting a friend request" do
 
-    user = FactoryBot.create(:user)
-    friend = FactoryBot.create(:user)
+    let(:user){FactoryBot.create(:user)}
+    let(:friend){FactoryBot.create(:user)}
 
-    before(:all) do
+    before do
       user.requesters << friend
-      user.friendship_requests.find_by(friend_id: friend.id).accept
+      user.friend_requests.where(friend: friend).first.accepted!
     end
 
     it "updates user.friends with the friend that sent the request" do
@@ -84,7 +92,7 @@ RSpec.describe User, type: :model do
     end
 
     it "deletes the request" do
-      expect(user.friendship_requests.find_by(friend_id: friend.id).nil?).to be true
+      expect(user.friend_requests.where(friend: friend).empty?).to be true
     end
 
   end
