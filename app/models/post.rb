@@ -6,4 +6,5 @@ class Post < ApplicationRecord
   has_many :likers, through: :likes, source: :user
   has_many :viewers, through: :views, source: :user
   has_many :commenters, through: :comments, source: :user
+
 end
