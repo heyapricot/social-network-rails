@@ -35,13 +35,13 @@ RSpec.describe Post, type: :model do
     end
   end
 
-  context "when commenting a post" do
+  context "post comments" do
     let(:users) {FactoryBot.create_list(:user, 4)}
     let(:post){FactoryBot.create(:post, author: users.first)}
     content = "Test comment"
     before {users.each { |u| post.comments.create(user: u, content: content) }}
 
-    it "keeps track of the number of comments" do
+    it "stores the comment content and the user that created it" do
       post.comments.each do |c|
         expect(c.content).to eq content
         expect(users.include? c.user).to be true
