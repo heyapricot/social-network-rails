@@ -52,22 +52,24 @@ RSpec.describe Post, type: :model do
       expect(post.commenters).to match_array(users)
     end
 
-    it "rejects comments with empty content" do
-      comment = post.comments.build(user: users.first, content: "            ")
-      comment.valid?
-      expect(comment.errors).to include(:content)
-    end
+    describe "validations" do
+      it "rejects comments with empty content" do
+        comment = post.comments.build(user: users.first, content: "            ")
+        comment.valid?
+        expect(comment.errors).to include(:content)
+      end
 
-    it "rejects likes with content" do
-      like = post.likes.build(user: users.first, content: "This shouldn't be here")
-      like.valid?
-      expect(like.errors).to include(:content)
-    end
+      it "rejects likes with content" do
+        like = post.likes.build(user: users.first, content: "This shouldn't be here")
+        like.valid?
+        expect(like.errors).to include(:content)
+      end
 
-    it "rejects views with content" do
-      view = post.views.build(user: users.first, content: "This shouldn't be here")
-      view.valid?
-      expect(view.errors).to include(:content)
+      it "rejects views with content" do
+        view = post.views.build(user: users.first, content: "This shouldn't be here")
+        view.valid?
+        expect(view.errors).to include(:content)
+      end
     end
   end
 
