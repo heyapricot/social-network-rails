@@ -25,12 +25,12 @@ RSpec.describe Post, type: :model do
     let(:post){FactoryBot.create(:post, author: users.first)}
 
     it "keeps track of the number of views" do
-      users.each { |u| post.viewers << u }
+      users.each { |u| post.views.create(user: u) }
       expect(post.views.size).to eq users.length
     end
 
     it "can get a list of Users who viewed the post" do
-      users.each { |u| post.viewers << u }
+      users.each { |u| post.views.create(user: u) }
       expect(post.viewers).to match_array(users)
     end
   end
