@@ -3,85 +3,67 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
 
   let(:user){FactoryBot.create(:user)}
+  let(:friends){FactoryBot.create_list(:user,4)}
 
-  it "has many posts" do
-
-    post_quantity = 3
-
-    post_quantity.times {FactoryBot.create(:post, author: user)}
-    expect(user.posts.length).to eq(post_quantity)
-  end
-
-  it "can get a list of friend requests and the requesters" do
-    friend = FactoryBot.create(:user)
-    user.requesters << friend
-
-    expect(user.friend_requests.where(friend: friend).length).to be 1
-    expect(user.friend_requests.where(friend: friend).first.friend).to eq friend
-  end
-
-  it "can get all the posts made by friends" do
-    friend_quantity = 4
-    post_quantity = 2
-
-    friends = Array.new
-    posts = Array.new
-
-    friend_quantity.times {friends << FactoryBot.create(:user)}
-    friends.each {|f| post_quantity.times {posts << FactoryBot.create(:post, user_id: f.id)} }
-
-    user.friends << friends
-
-    feed = user.friends_posts
-
-    expect(feed.length).to eq (friend_quantity * post_quantity)
-    expect(feed).to match_array(posts)
-
-  end
-
-  it "can get all the posts made by friends that the user haven't seen" do
-    friend_quantity = 4
-    post_quantity = 2
-
-    friends = Array.new
-    posts = Array.new
-    unseen_posts = Array.new
-
-    friend_quantity.times {friends << FactoryBot.create(:user)}
-    friends.each do |f|
-      post_quantity.times {posts << FactoryBot.create(:post, user_id: f.id)}
-      f.posts.first.viewers << user
-      unseen_posts << f.posts.second
+  describe "friendships" do
+    it "can get a list of Users that are friends" do
+      user.friendships.create(friend: friends.first, status: :accepted)
+      friends[1..-1].each {|f| f.friendships.create(friend: user, status: :accepted)}
+      expect(user.friends).to match_array(friends)
     end
 
-    user.friends << friends
-
-    expect(unseen_posts.length).to eq (friend_quantity)
-    expect(unseen_posts).to match_array(unseen_posts)
-
-  end
-
-  context "when accepting a friend request" do
-
-    let(:user){FactoryBot.create(:user)}
-    let(:friend){FactoryBot.create(:user)}
-
-    before do
+    it "can get a list of friend requests and the requesters" do
+      friend = friends.first
       user.requesters << friend
-      user.friend_requests.where(friend: friend).first.accepted!
+
+      expect(user.friend_requests.where(friend: friend).length).to be 1
+      expect(user.friend_requests.where(friend: friend).first.friend).to eq friend
     end
 
-    it "updates user.friends with the friend that sent the request" do
-      expect(user.friends).to include(friend)
+    context "when accepting a friend request" do
+
+      let(:user){FactoryBot.create(:user)}
+      let(:friend){FactoryBot.create(:user)}
+
+      before do
+        user.requesters << friend
+        user.friend_requests.where(friend: friend).first.accepted!
+      end
+
+      it "updates user.friends with the friend that sent the request" do
+        expect(user.friends).to include(friend)
+      end
+
+      it "updates friend.friends with the friend that sent the request" do
+        expect(friend.friends).to include(user)
+      end
+
+      it "deletes the request" do
+        expect(user.friend_requests.where(friend: friend).empty?).to be true
+      end
+
     end
 
-    it "updates friend.friends with the friend that sent the request" do
-      expect(friend.friends).to include(user)
+
+  end
+
+  describe "posts" do
+    before {friends.each{|f| f.friendships.create(friend: user, status: :accepted)}}
+
+    it "can create a post" do
+      content = "Test post"
+      user.posts.create(content: content)
+      expect(user.posts.first.content).to eq content
     end
 
-    it "deletes the request" do
-      expect(user.friend_requests.where(friend: friend).empty?).to be true
+    it "can get a list of friend's posts" do
+      posts = []
+      content = "Test post"
+      friends.each {|f| 2.times{posts << f.posts.create(content: content)}}
+      expect(user.friends).to match_array(friends)
+      expect(user.friends_posts).to match_array(posts)
     end
 
   end
+
 end

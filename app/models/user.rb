@@ -2,17 +2,14 @@ class User < ApplicationRecord
   has_many :posts
   has_many :friendships, ->{where(status: :accepted)}, class_name: :Friendship
   has_many :friend_requests, ->{where(status: :requested)}, class_name: :Friendship
-
   has_many :requesters, through: :friend_requests, source: :friend
-  has_many :friends, through: :friendships, source: :friend
+
+  def friends
+    User.joins("INNER JOIN friendships ON users.id = friendships.friend_id").where("friendships.user_id = ?", self.id)  +  User.joins("INNER JOIN friendships ON users.id = friendships.user_id").where("friendships.friend_id = ?", self.id)
+  end
 
   def friends_posts
     Post.where(author: self.friends)
-  end
-
-  def unseen_posts
-    vp = viewed_posts.map { |p| p.id }
-    friends_posts.where.not(id: vp)
   end
 
 end
