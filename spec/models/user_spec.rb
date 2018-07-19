@@ -64,6 +64,15 @@ RSpec.describe User, type: :model do
       expect(user.friends_posts).to match_array(posts)
     end
 
+    it "can get a list of friend's unseen posts" do
+      unseen_posts = []
+      content = "Test post"
+      friends.each {|f| 2.times{ f.posts.create(content: content)}}
+      friends.each {|f| f.posts.first.viewers << user}
+      friends.each {|f| unseen_posts << f.posts.second }
+      expect(user.unseen_posts).to match_array(unseen_posts)
+    end
+
   end
 
 end

@@ -12,4 +12,8 @@ class User < ApplicationRecord
     Post.where(author: self.friends)
   end
 
+  def unseen_posts
+    Post.where(author: self.friends) - Post.joins(:views).where(author: self.friends)
+  end
+
 end
