@@ -2,14 +2,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  friend_quantity = 4
-
   let(:user){FactoryBot.create(:user)}
   let(:friends){FactoryBot.create_list(:user,4)}
-    ar = Array.new
-    friend_quantity.times { ar << FactoryBot.create(:user) }
-    ar
-  end
 
   describe "friendships" do
     it "can get a list of Users that are friends" do
@@ -55,6 +49,8 @@ RSpec.describe User, type: :model do
       content = "Test post"
       user.posts.create(content: content)
       expect(user.posts.first.content).to eq content
+    end
+
     it "can get a list of friend's posts" do
       posts = []
       content = "Test post"
@@ -72,9 +68,6 @@ RSpec.describe User, type: :model do
       expect(user.unseen_posts).to match_array(unseen_posts)
     end
 
-      friend = friends.first
-      user.requesters << friend
-      user.friendship_requests.find_by(friend_id: friend.id).accept
   end
 
 end
