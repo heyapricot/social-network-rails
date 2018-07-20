@@ -18,7 +18,7 @@ RSpec.feature "NavbarActions", type: :feature do
     visit user_path(user.id)
 
     expect(user.friend_requests.count).to eq(number_of_friends)
-    save_and_open_page
+    #save_and_open_page
     expect(page).to have_text("#{number_of_friends}")
 
   end

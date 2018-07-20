@@ -17,7 +17,7 @@
       <%= post.content %>
     </div>
     <div class="list-group-item d-flex justify-content-around">
-      <%= link_to icon('fas','thumbs-up', 'Like'), post_likes_path(post), :class => "btn btn-primary btn-sm", :method => :post %>
+      <%= link_to icon('fas','thumbs-up', 'Like'), post_likes_path(post, post_action: :like), :class => "btn btn-primary btn-sm", :method => :post %>
       <%= link_to icon('fas','comment', 'Comments'), "#post-#{post.id}-comments", :class => "btn btn-primary btn-sm" %>
     </div>
     <% unless post.likes.count <= 0 %>
@@ -26,10 +26,10 @@
     </div>
     <% end %>
     <div class="list-group-item">
-      <%= form_for :comment, :url => post_comments_path(post) do |f| %>
+      <%= form_with url: post_comments_path(post, post_action: :comment) do |f| %>
         <div class="form-row">
           <div class="col-10">
-            <%= f.text_field :content, :class => "form-control", :placeholder => "Add a comment" %>
+            <%= f.text_field :content, id: "comment_content", :class => "form-control", :placeholder => "Add a comment" %>
           </div>
           <div class="col-2 d-flex align-items-center">
             <%= f.submit "Comment", :class => "btn btn-primary btn-sm"  %>
@@ -39,7 +39,7 @@
     </div>
     <% unless post.comments.count <= 0 %>
     <div class="list-group-item" id="<%= "post-#{post.id}-comments" %>" style="max-height: 140px; overflow-y: auto">
-      <%= render partial: "comments/comment", collection: post.comments  %>
+      <%= render partial: "post_actions/comment", collection: post.comments  %>
     </div>
     <% end %>
   </div>

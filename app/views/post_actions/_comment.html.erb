@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-10">
       <%= image_tag("chronicle_home_transparent.png", :class => "img-fluid", style: "width: 30px") %>
-      <%= link_to "#{comment.author.fullname}", user_path(comment.author) %>
+      <%= link_to "#{comment.user.fullname}", user_path(comment.user) %>
       <%= "#{comment.content}" %>
     </div>
   </div>

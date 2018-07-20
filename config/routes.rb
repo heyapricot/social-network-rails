@@ -6,8 +6,8 @@ Rails.application.routes.draw do
     resources :posts, only: %i[create]
   end
   resources :posts, only: %i[create] do
-    resources :comments, only: %i[create]
-    resources :likes, only: %i[create]
+    resources :comments, only: %i[create], controller: :post_actions
+    resources :likes, only: %i[create], controller: :post_actions
   end
 
   root to: 'home#index'

@@ -21,7 +21,6 @@ RSpec.feature "UserActions", type: :feature do
     visit user_path(user.id)
     fill_in "comment_content", with: comment
     click_button "Comment"
-    save_and_open_page
     expect(page).to have_text(comment)
   end
 
@@ -30,7 +29,7 @@ RSpec.feature "UserActions", type: :feature do
     visit user_path(user.id)
     fill_in "post_content", with: text
     click_button "Post"
-    save_and_open_page
+    #save_and_open_page
     expect(page).to have_text(text)
   end
 
