@@ -24,7 +24,7 @@ RSpec.feature "UserActions", type: :feature do
     expect(page).to have_text(comment)
   end
 
-  pending "Create a post from the current user's show page" do
+  it "Create a post from the current user's show page" do
     text = "This is a test"
     visit user_path(user.id)
     fill_in "post_content", with: text
