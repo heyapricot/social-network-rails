@@ -84,6 +84,8 @@ GEM
     factory_bot_rails (4.10.0)
       factory_bot (~> 4.10.0)
       railties (>= 3.0.0)
+    faker (1.9.1)
+      i18n (>= 0.7)
     ffi (1.9.25)
     font-awesome-sass (5.0.13)
       sassc (>= 1.11)
@@ -266,6 +268,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   factory_bot_rails
+  faker
   font-awesome-sass
   guard
   guard-rspec
