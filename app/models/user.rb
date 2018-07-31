@@ -24,8 +24,4 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def fullname
-    "#{first_name} #{last_name}"
-  end
-
 end

@@ -1,23 +1,21 @@
 require 'rails_helper'
 
 RSpec.feature "UserActions", type: :feature do
+  post_content = "Test Post"
+
   let(:user){FactoryBot.create(:user)}
+  let!(:post){FactoryBot.create(:post, author: user, content: post_content)}
+  let!(:friend){FactoryBot.create(:user)}
 
   before(:each) { login_as(user, :scope => :user) }
 
-  scenario "Visit user show page" do
-
-    post = user.posts.create(content: "Test Post")
-
-    visit user_path(user.id)
-
+  scenario "User visits show page" do
+    visit user_path(user)
     expect(page).to have_text(user.first_name)
     expect(page).to have_text(post.content)
   end
 
   scenario "User sends a friend request from index page" do
-    friend = FactoryBot.create(:user)
-
     visit users_path
     click_link "Add Friend"
     expect(friend.requesters.include?(user)).to be(true)
