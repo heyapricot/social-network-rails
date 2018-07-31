@@ -5,7 +5,7 @@
     <div class="navbar-nav d-flex flex-row">
       <% if current_user %>
         <% if current_user.friend_requests.length > 0 %>
-          <%= link_to icon('fas', 'bell', content_tag(:span, "#{current_user.friendship_requests.count}", :class => "align-top badge badge-pill badge-dark")) , "#", :class => "nav-item nav-link mr-3" %>
+          <%= link_to icon('fas', 'bell', content_tag(:span, "#{current_user.friend_requests.count}", :class => "align-top badge badge-pill badge-dark")) , "#", :class => "nav-item nav-link mr-3" %>
         <% else %>
           <%= link_to icon('fas', 'bell') ,"#", :class => "nav-item nav-link mr-3" %>
         <% end %>
