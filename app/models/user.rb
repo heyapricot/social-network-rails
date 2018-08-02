@@ -4,12 +4,25 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :posts
-  has_many :friendships, ->{where(status: :accepted)}, class_name: :Friendship
-  has_many :friend_requests, ->{where(status: :requested)}, class_name: :Friendship
-  has_many :requesters, through: :friend_requests, source: :friend
+  has_many :accepted_friendships, ->{where(status: :accepted)}, class_name: "Friendship"
+  has_many :sent_friend_requests, ->{where(status: :requested)}, class_name: "Friendship"
+  has_many :requestees, through: :sent_friend_requests, source: :friend
+
+  def received_friend_requests
+    Friendship.where(friend_id: self.id, status: :requested)
+  end
+
+  def requesters
+    User.where(id: received_friend_requests.pluck(:user_id))
+  end
 
   def friends
-    User.joins("INNER JOIN friendships ON users.id = friendships.friend_id").where("friendships.user_id = ?", self.id)  +  User.joins("INNER JOIN friendships ON users.id = friendships.user_id").where("friendships.friend_id = ?", self.id)
+    user_ids = Friendship.where("(user_id = ? OR friend_id = ?) AND status = ?", self.id, self.id, Friendship.statuses[:accepted]).pluck(:user_id, :friend_id)
+    unless user_ids.empty?
+      user_ids.flatten!.uniq!
+      user_ids.delete(self.id)
+      User.where(id: user_ids)
+    end
   end
 
   def friends_posts

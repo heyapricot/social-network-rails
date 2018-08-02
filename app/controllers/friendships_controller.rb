@@ -7,7 +7,7 @@ class FriendshipsController < ApplicationController
 
   def create
     user = User.find(params[:user_id])
-    fr = user.friend_requests.new(friend: current_user)
+    fr = Friendship.create(user: current_user, friend: user, status: :requested)
     redirect_back(fallback_location: users_path) if fr.save
   end
 end

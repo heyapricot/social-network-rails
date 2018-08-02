@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :user do
+  factory :user, aliases: %i[author friend] do
     first_name {Faker::Overwatch.hero}
     last_name {Faker::Overwatch.location}
     nickname "ts"
