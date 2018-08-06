@@ -2,15 +2,17 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
+  post_quantity = 2
   friendship_quantity = 2
-  let!(:user){FactoryBot.create(:user)}
+  let!(:user){FactoryBot.create(:user_with_posts, posts_count: post_quantity)}
+  let!(:friendships){FactoryBot.create_list(:friendship_with_posts, friendship_quantity, user: user, status: :accepted)}
+  let(:friends){friendships.map{|f| f.friend}}
+
 
   describe "friendships" do
 
-    let!(:friendships){FactoryBot.create_list(:friendship, friendship_quantity, user: user, status: :accepted)}
     let!(:sent_friend_requests){FactoryBot.create_list(:friendship, friendship_quantity, user: user, status: :requested)}
     let!(:received_friend_requests){FactoryBot.create_list(:friendship, friendship_quantity, friend: user, status: :requested)}
-    let(:friends){friendships.map{|f| f.friend}}
     let(:requestees){sent_friend_requests.map{|fr| fr.friend}}
     let(:requesters){received_friend_requests.map{|fr| fr.user}}
 
@@ -65,31 +67,22 @@ RSpec.describe User, type: :model do
 
   describe "posts" do
 
-    let!(:friendships){FactoryBot.create_list(:friendship, friendship_quantity, friend: user, status: :accepted)}
-    let(:friends){friendships.map{|f| f.user}}
+    it "can get all the posts where user is the author" do
+      expect(user.posts.length).to eq post_quantity
+    end
 
     it "can create a post" do
       content = "Test post"
       user.posts.create(content: content)
-      expect(user.posts.first.content).to eq content
+      expect(user.posts.last.content).to eq content
     end
 
     it "can get a list of friend's posts" do
-      posts = []
-      content = "Test post"
-      friends.each {|f| 2.times{posts << f.posts.create(content: content)}}
+      posts = Post.where(author: friends).to_a
       expect(user.friends).to match_array(friends)
       expect(user.friends_posts).to match_array(posts)
     end
 
-    it "can get a list of friend's unseen posts" do
-      unseen_posts = []
-      content = "Test post"
-      friends.each {|f| 2.times{ f.posts.create(content: content)}}
-      friends.each {|f| f.posts.first.viewers << user}
-      friends.each {|f| unseen_posts << f.posts.second }
-      expect(user.unseen_posts).to match_array(unseen_posts)
-    end
   end
 end
 

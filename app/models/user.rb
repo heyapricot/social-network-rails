@@ -33,6 +33,12 @@ class User < ApplicationRecord
     Post.where(author: self.friends)
   end
 
+  def timeline_posts
+    ids = self.friends.pluck(:id)
+    ids << self.id
+    Post.where(user_id: ids)
+  end
+
   def unseen_posts
     Post.where(author: self.friends) - Post.joins(:views).where(author: self.friends)
   end

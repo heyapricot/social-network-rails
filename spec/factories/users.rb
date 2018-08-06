@@ -5,5 +5,14 @@ FactoryBot.define do
     nickname "ts"
     sequence(:email) { |n| "test_user#{n}@domain.com" }
     password "f4k3p455w0rd"
+
+    factory :user_with_posts do
+      transient{posts_count 2}
+
+      after(:create) do |user, evaluator|
+        create_list(:post, evaluator.posts_count, author: user)
+      end
+    end
+
   end
 end
