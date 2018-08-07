@@ -3,11 +3,11 @@
     <%= link_to (icon('fas', 'feather', 'Chronicle')), root_path, :class => "navbar-brand"   %>
 
     <div class="navbar-nav d-flex flex-row">
-      <% if current_user %>
+      <% if user_signed_in? %>
         <% if current_user.received_friend_requests.length > 0 %>
-          <%= link_to icon('fas', 'bell', content_tag(:span, "#{current_user.received_friend_requests.count}", :class => "align-top badge badge-pill badge-dark")) , "#", :class => "nav-item nav-link mr-3" %>
+          <%= link_to icon('fas', 'bell', content_tag(:span, "#{current_user.received_friend_requests.count}", :class => "align-top badge badge-pill badge-dark")) , users_path , :class => "nav-item nav-link mr-3" %>
         <% else %>
-          <%= link_to icon('fas', 'bell') ,"#", :class => "nav-item nav-link mr-3" %>
+          <%= link_to icon('fas', 'bell') , users_path , :class => "nav-item nav-link mr-3" %>
         <% end %>
 
 
