@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-
+    @posts = current_user.timeline_posts.order(created_at: :desc)
   end
 
   def create
