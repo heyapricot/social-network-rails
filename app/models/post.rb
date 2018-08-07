@@ -7,4 +7,16 @@ class Post < ApplicationRecord
   has_many :viewers, through: :views, source: :user
   has_many :commenters, through: :comments, source: :user
 
+  def display_likers
+    case
+    when likers.count > 3
+      "#{likers.first.fullname}, #{likers.second.fullname} and #{likers.count - 2} others"
+    when likers.count == 3
+      "#{likers.first.fullname}, #{likers.second.fullname} and #{likers.third.fullname}"
+    when likers.count == 2
+      "#{likers.first.fullname} and #{likers.second.fullname}"
+    when likers.count == 1
+      likers.take.fullname
+    end
+  end
 end

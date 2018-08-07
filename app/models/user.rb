@@ -34,7 +34,7 @@ class User < ApplicationRecord
   end
 
   def timeline_posts
-    ids = self.friends.pluck(:id)
+    self.friends.nil? ? ids = Array.new : ids = self.friends.pluck(:id)
     ids << self.id
     Post.where(user_id: ids)
   end

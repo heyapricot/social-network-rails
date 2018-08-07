@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :posts, only: %i[create]
     resources :friendships, only: %i[index create]
   end
-  resources :posts, only: %i[create index] do
+  resources :posts, only: %i[create index show] do
     resources :comments, only: %i[create], controller: :post_actions
     resources :likes, only: %i[create], controller: :post_actions
   end

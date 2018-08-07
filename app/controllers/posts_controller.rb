@@ -10,6 +10,10 @@ class PostsController < ApplicationController
     redirect_back(fallback_location: user_path(current_user)) if post.save
   end
 
+  def show
+    @post = Post.find(params[:id])
+  end
+
   private
 
   def post_params

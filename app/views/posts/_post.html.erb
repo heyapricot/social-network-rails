@@ -21,6 +21,16 @@
       <%= link_to "Comment", "#", :class => "btn btn-primary" %>
       <%= link_to "Share", "#", :class => "btn btn-primary" %>
     </div>
+    <% unless post.likes.empty? %>
+      <div class="list-group-item">
+        <%= icon('fas', 'thumbs-up', post.display_likers) %>
+      </div>
+    <% end %>
+    <% unless post.comments.empty? %>
+      <div class="list-group-item">
+        <%= render partial: "post_actions/comment", collection: post.comments %>
+      </div>
+    <% end %>
   </div>
 
   <div class="card-footer">
