@@ -10,4 +10,10 @@ class FriendshipsController < ApplicationController
     fr = Friendship.create(user: current_user, friend: user, status: :requested)
     redirect_back(fallback_location: users_path) if fr.save
   end
+
+  def update
+    fr = Friendship.find(params[:id])
+    fr.status = params[:status]
+    redirect_back(fallback_location: users_path) if fr.save
+  end
 end

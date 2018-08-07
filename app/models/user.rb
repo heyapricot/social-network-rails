@@ -25,6 +25,10 @@ class User < ApplicationRecord
     end
   end
 
+  def get_friendship(user)
+    Friendship.where("(user_id = :user AND friend_id = :friend) OR (user_id = :friend AND friend_id = :user )", user: self, friend: user).take!
+  end
+
   def friends_posts
     Post.where(author: self.friends)
   end

@@ -4,7 +4,7 @@
   <% if !user.requesters.nil? && user.requesters.include?(current_user) %>
     <%= content_tag(:div, icon('fas','check', 'Requested')) %>
   <% elsif !user.requestees.nil? && user.requestees.include?(current_user) %>
-    <%= content_tag(:div, icon('fas','check', 'Waiting for answer')) %>
+    <%= link_to icon('fas','check', 'Accept Request'), friendship_path(current_user.get_friendship(user), status: "accepted"), class: "btn btn-primary btn-sm", method: :put %>
   <% elsif !user.friends.nil? && user.friends.include?(current_user) %>
     <%= content_tag(:div, icon('fas','user-friends', 'Friends')) %>
   <% else %>

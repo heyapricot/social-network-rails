@@ -34,6 +34,10 @@ RSpec.describe User, type: :model do
       expect(user.friends).to match_array(friends)
     end
 
+    it "can get a friendship object that shares with another user" do
+      expect(user.get_friendship(friendships.first.friend)).to eq(friendships.first)
+    end
+
     context "when accepting a friend request" do
 
       let(:friend_request){FactoryBot.create(:friendship, user: user, status: :requested)}

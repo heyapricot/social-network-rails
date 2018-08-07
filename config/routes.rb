@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :comments, only: %i[create], controller: :post_actions
     resources :likes, only: %i[create], controller: :post_actions
   end
+  resources :friendships, only: :update
 
   root to: 'home#index'
 

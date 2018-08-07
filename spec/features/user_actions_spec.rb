@@ -41,6 +41,17 @@ RSpec.feature "UserActions", type: :feature do
 
     before(:each) { login_as(user, scope: :user) }
 
+    context "when a user has a friend request" do
+      let!(:friendship){FactoryBot.create(:friendship, friend: user, status: :requested)}
+      scenario "User accepts a friend request from index page" do
+        visit users_path
+        click_link "Accept Request"
+        expect(user.friends.include?(friendship.user)).to be(true)
+        expect(friendship.user.friends.include?(user)).to be(true)
+        expect(page).to have_text("Friends")
+      end
+    end
+
     scenario "User visits show page" do
       visit user_path(user)
       expect(page).to have_text(user.first_name)
