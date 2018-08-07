@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
   resources :friendships, only: :update
 
-  root to: 'home#index'
+  root to: 'posts#index'
 
   devise_scope :user do
     get 'login', to: 'devise/sessions#new'
