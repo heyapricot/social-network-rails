@@ -17,12 +17,12 @@
       <%= post.content %>
     </div>
     <div class="list-group-item d-flex justify-content-between">
-      <%= link_to "Like", "#", :class => "btn btn-primary" %>
+      <%= link_to "Like", post_likes_path(post, post_action: :like), class: "btn btn-primary", method: :post %>
       <%= link_to "Comment", "#", :class => "btn btn-primary" %>
       <%= link_to "Share", "#", :class => "btn btn-primary" %>
     </div>
     <% unless post.likes.empty? %>
-      <div class="list-group-item">
+      <div class="list-group-item" id="likes">
         <%= icon('fas', 'thumbs-up', post.display_likers) %>
       </div>
     <% end %>
