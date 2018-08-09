@@ -71,12 +71,5 @@ RSpec.feature "UserActions", type: :feature do
       click_button "Post"
       expect(page).to have_text(text)
     end
-
-    pending "Create a comment on a post froma user page" do
-      visit user_path(user)
-      fill_in "comment_content", with: "Comment creation test"
-      click_button "Comment"
-      expect(page).to have_text(comment)
-    end
   end
 end

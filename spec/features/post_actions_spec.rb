@@ -23,6 +23,14 @@ RSpec.feature "PostActions", type: :feature do
       user.posts.each{|p| expect(page).to have_text(p.content)}
     end
 
+    scenario "Create a comment on a post froma user page" do
+      comment = "Comment creation test"
+      visit post_path(post)
+      fill_in "content", with: comment
+      click_button "Comment"
+      expect(page).to have_text(comment)
+    end
+
     context "When a post has likes and comments" do
       let!(:post){FactoryBot.create(:post_with_likes, author: user)}
       let!(:comments){FactoryBot.create_list(:post_action, comment_quantity, post: post, user: user, action: :comment, content: Faker::Overwatch.quote)}

@@ -16,24 +16,28 @@
     <div class="list-group-item">
       <%= post.content %>
     </div>
-    <div class="list-group-item d-flex justify-content-between">
-      <%= link_to "Like", post_likes_path(post, post_action: :like), class: "btn btn-primary", method: :post %>
-      <%= link_to "Comment", "#", :class => "btn btn-primary" %>
-      <%= link_to "Share", "#", :class => "btn btn-primary" %>
-    </div>
-    <% unless post.likes.empty? %>
-      <div class="list-group-item" id="likes">
-        <%= icon('fas', 'thumbs-up', post.display_likers) %>
+    <%= form_with url: post_comments_path(post, post_action: :comment) do |form| %>
+      <div class="list-group-item d-flex justify-content-between">
+        <%= link_to "Like", post_likes_path(post, post_action: :like), class: "btn btn-primary", method: :post %>
+        <%= form.submit "Comment", class: "btn btn-primary" %>
+      </div>
+      <% unless post.likes.empty? %>
+       <div class="list-group-item" id="likes">
+          <%= icon('fas', 'thumbs-up', post.display_likers) %>
+        </div>
+      <% end %>
+      <% unless post.comments.empty? %>
+        <div class="list-group-item">
+          <%= render partial: "post_actions/comment", collection: post.comments %>
+        </div>
+      <% end %>
+      <div class="card-footer">
+        <div class="form-row">
+          <div class="col">
+            <%= form.text_field :content, class: "form-control", placeholder: "Add a comment..." %>
+          </div>
+        </div>
       </div>
     <% end %>
-    <% unless post.comments.empty? %>
-      <div class="list-group-item">
-        <%= render partial: "post_actions/comment", collection: post.comments %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="card-footer">
-
   </div>
 </div>
