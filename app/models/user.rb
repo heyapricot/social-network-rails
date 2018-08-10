@@ -5,8 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
   has_many :posts
-  has_many :accepted_friendships, ->{where(status: :accepted)}, class_name: "Friendship"
-  has_many :sent_friend_requests, ->{where(status: :requested)}, class_name: "Friendship"
+  has_many :accepted_friendships, ->{where(status: Friendship.statuses[:accepted])}, class_name: "Friendship"
+  has_many :sent_friend_requests, ->{where(status: Friendship.statuses[:requested])}, class_name: "Friendship"
   has_many :requestees, through: :sent_friend_requests, source: :friend
 
   def self.new_with_session(params, session)
