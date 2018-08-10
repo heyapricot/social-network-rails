@@ -31,8 +31,11 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'bootstrap'
 gem 'devise'
+gem 'figaro'
 gem 'font-awesome-sass'
 gem 'jquery-rails'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 group :development do
   gem 'guard'
