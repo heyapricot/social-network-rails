@@ -3,7 +3,7 @@
     <div class="col-xl-4 d-flex flex-column justify-content-between p-3">
       <div><h2 class="text-center">Sign up</h2></div>
       <div>
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), multipart: true) do |f| %>
           <%= devise_error_messages! %>
 
           <div class="form-row">
@@ -26,6 +26,11 @@
           <div class="form-group field">
             <%= f.label :email, :class => "form-check-label" %><br />
             <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => "form-control" %>
+          </div>
+
+          <div class="form-group field">
+            <%= f.label :avatar %>
+            <%= f.file_field :avatar %>
           </div>
 
           <div class="form-group field">
