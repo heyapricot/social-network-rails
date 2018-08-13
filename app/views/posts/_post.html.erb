@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-2">
-          <%= image_tag("chronicle_home_transparent.png", :class => "img-fluid") %>
+          <%= image_tag(@user.avatar.url(:square), class: "img-fluid") %>
         </div>
         <div class="col d-flex flex-column justify-content-center">
           <%= content_tag(:div, post.author.fullname)%>
