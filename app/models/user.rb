@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :accepted_friendships, ->{where(status: Friendship.statuses[:accepted])}, class_name: "Friendship"
   has_many :sent_friend_requests, ->{where(status: Friendship.statuses[:requested])}, class_name: "Friendship"
   has_many :requestees, through: :sent_friend_requests, source: :friend
+  has_attached_file :avatar, styles: { medium: "100x100>", thumb: "150x150>" }, default_url: "/images/:style/missing.png"
+  validates_attachment :photo, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }, size: { in: 0..5.megabytes }
 
   def self.new_with_session(params, session)
     super.tap do |user|
