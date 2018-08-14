@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
+  attr_reader :avatar_remote_url
   has_many :posts
   has_many :accepted_friendships, ->{where(status: Friendship.statuses[:accepted])}, class_name: "Friendship"
   has_many :sent_friend_requests, ->{where(status: Friendship.statuses[:requested])}, class_name: "Friendship"
@@ -25,8 +26,17 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token[0,20]
       user.first_name = auth.info.name.split(" ")[0]
       user.last_name = auth.info.name.split(" ")[1]
-      #user.image = auth.info.avatar
+      print "auth.info.image is: #{auth.info} and class is: #{auth.info.image.class}\ņ"
+      user.avatar_remote_url=(auth.info.image)
     end
+  end
+
+  def avatar_remote_url=(url_value)
+    self.avatar = open(URI.parse(url_value))
+    # Assuming url_value is http://example.com/photos/face.png
+    # avatar_file_name == "face.png"
+    # avatar_content_type == "image/png"
+    @avatar_remote_url = url_value
   end
 
   def received_friend_requests
