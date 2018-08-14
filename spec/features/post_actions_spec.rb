@@ -48,6 +48,15 @@ RSpec.feature "PostActions", type: :feature do
       expect(section).to have_text(user.fullname)
     end
 
+    scenario "Comment a post, then like" do
+      comment = "Comment creation test"
+      visit post_path(post)
+      fill_in "content", with: comment
+      click_button "Comment"
+      click_link "Like"
+      expect(page).to have_text(comment)
+    end
+
   end
 
 end

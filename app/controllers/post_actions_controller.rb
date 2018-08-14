@@ -11,7 +11,7 @@ class PostActionsController < ApplicationController
       post_action = post.likes.new(user: current_user)
     end
 
-    redirect_back(fallback_location: user_path(current_user)) if post_action.save!
+    redirect_back(fallback_location: user_path(current_user)) if post_action.save
   end
 
 end
