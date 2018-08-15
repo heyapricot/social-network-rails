@@ -92,6 +92,7 @@ Rails.application.configure do
   config.paperclip_defaults = {
       storage: :s3,
       path: ':class/:attachment/:id_partition/:style/:filename',
+      default_url: 'https://s3.amazonaws.com/social-network-rails/users/avatars/default.png',
       s3_protocol: 'https',
       s3_region: ENV['S3_REGION'],
       s3_host_name: ENV['S3_HOST_NAME'],
