@@ -1,0 +1,23 @@
+<nav class="navbar navbar-light fixed" style="background-color: #73C8A9">
+  <div class="container">
+    <%= link_to (icon('fas', 'feather', 'Chronicle')), root_path, :class => "navbar-brand"   %>
+
+    <div class="navbar-nav d-flex flex-row">
+      <% if user_signed_in? %>
+        <% if current_user.received_friend_requests.length > 0 %>
+          <%= link_to icon('fas', 'bell', content_tag(:span, "#{current_user.received_friend_requests.count}", :class => "align-top badge badge-pill badge-dark")) , users_path , :class => "nav-item nav-link mr-3" %>
+        <% else %>
+          <%= link_to icon('fas', 'bell') , users_path , :class => "nav-item nav-link mr-3" %>
+        <% end %>
+
+        <%= link_to "Hello, #{current_user.first_name}", user_path(current_user.id), :class => "nav-item nav-link mr-3" %>
+        <%= link_to "Log out", destroy_user_session_path , method: :delete, :class => "nav-item nav-link mr-3" %>
+
+      <% else %>
+        <%= link_to "Login", login_path, :class => "nav-item nav-link mr-3" %>
+        <%= link_to "Sign up", new_user_registration_path, :class => "nav-item nav-link mr-3" %>
+
+      <% end %>
+    </div>
+  </div>
+</nav>

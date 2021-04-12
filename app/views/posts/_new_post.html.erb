@@ -1,0 +1,10 @@
+<div class="list-group post mb-3">
+    <%= form_for :post, url: user_posts_path(current_user) do |f| %>
+      <div class="list-group-item">
+        <%= f.text_field :content, class: "form-control", placeholder: "What's on your mind?"%>
+      </div>
+      <div class="list-group-item d-flex justify-content-end">
+        <%= f.submit "Post", class: "btn btn-primary btn-sm" %>
+      </div>
+    <% end %>
+</div>

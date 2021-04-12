@@ -1,0 +1,11 @@
+<div class="container">
+  <%= render partial: "profile_header" %>
+  <div class="row justify-content-center">
+      <div class="col-lg">
+        <%= render partial:"friendships/request" , :collection => @slices.first, as: :user %>
+      </div>
+      <div class="col-lg">
+        <%= render partial: "friendships/request", :collection => @slices.second, as: :user %>
+      </div>
+  </div>
+</div>

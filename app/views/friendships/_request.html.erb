@@ -1,0 +1,13 @@
+<div class="d-flex align-items-center mb-3">
+  <%= image_tag(user.avatar.url, class: "img-fluid mr-3", style: "width: 100px") %>
+  <%= link_to "#{user.fullname}", user_path(user), class: "mr-auto" %>
+  <% if !user.requesters.nil? && user.requesters.include?(current_user) %>
+    <%= content_tag(:div, icon('fas','check', 'Requested')) %>
+  <% elsif !user.requestees.nil? && user.requestees.include?(current_user) %>
+    <%= link_to icon('fas','check', 'Accept Request'), friendship_path(current_user.get_friendship(user), status: "accepted"), class: "btn btn-primary btn-sm", method: :put %>
+  <% elsif !user.friends.nil? && user.friends.include?(current_user) %>
+    <%= content_tag(:div, icon('fas','user-friends', 'Friends')) %>
+  <% else %>
+    <%= link_to icon('fas','plus', 'Add Friend'), user_friendships_path(user), class: "btn btn-primary btn-sm", method: :post %>
+  <% end %>
+</div>

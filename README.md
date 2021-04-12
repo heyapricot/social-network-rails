@@ -1,5 +1,7 @@
 # README
 
+Color palette is named "Between the Clouds" and can be found [here](http://www.colourlovers.com/palette/1083480/Between_The_Clouds)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
