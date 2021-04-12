@@ -5,7 +5,7 @@ FactoryBot.define do
 
     factory :friendship_with_posts do
       transient do
-        posts_count 2
+        posts_count { 2 }
       end
 
       after(:create) do |friendship, evaluator|
