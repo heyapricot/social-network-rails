@@ -4,12 +4,15 @@ FactoryBot.define do
     friend
 
     factory :friendship_with_posts do
-      transient do
-        posts_count { 2 }
-      end
+      transient { posts_count { 2 } }
 
       after(:create) do |friendship, evaluator|
-        create_list(:post, evaluator.posts_count, author: friendship.friend, content: Faker::Overwatch.quote)
+        create_list(
+          :post,
+          evaluator.posts_count,
+          author: friendship.friend,
+          content: Faker::Games::Overwatch.quote
+        )
       end
     end
   end
