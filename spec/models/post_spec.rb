@@ -1,8 +1,17 @@
 require 'rails_helper'
-
+QUANTITY = 3
 RSpec.describe Post, type: :model do
   let(:users) { FactoryBot.create_list(:user, 2) }
-  let(:post) { FactoryBot.create(:post, author: user) }
+  let(:post) { FactoryBot.create(:post, author: users.first) }
+
+  describe '#likers_names' do
+    let!(:likes) { FactoryBot.create_list(:post_action, QUANTITY,  post: post, action: PostAction.actions[:like]) }
+    let(:names) { likes.map { |like| like&.user&.fullname } }
+
+    it 'returns the fullname of the people who liked the post' do
+      expect(post.likers_names).to match_array(names)
+    end
+  end
 
   context 'when liking a post' do
     let(:users) { FactoryBot.create_list(:user, 4) }
