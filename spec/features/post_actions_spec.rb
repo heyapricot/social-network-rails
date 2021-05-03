@@ -1,35 +1,77 @@
 require 'rails_helper'
-
+FRIENDSHIPS = 3
+COMMENTS = 3
+POSTS = 3
 RSpec.feature 'PostActions', type: :feature do
-  friendship_quantity = 4
-  comment_quantity = 2
-
   let!(:user) { FactoryBot.create(:user_with_posts) }
   let!(:friendships) do
     FactoryBot.create_list(
       :friendship_with_posts,
-      friendship_quantity,
+      FRIENDSHIPS,
       user: user,
       status: :accepted
     )
   end
   let(:post) { FactoryBot.create(:post, author: user) }
 
-  context 'With a user logged in' do
-    before(:each) { login_as(user, scope: :user) }
+  context 'When a User has friends' do
+    let!(:user) { FactoryBot.create(:user_with_friends) }
+    let(:friends) { user.friends }
 
-    scenario 'Visit post index page' do
-      visit posts_path
-      friendships.each do |friendship|
-        friendship
-          .friend
-          .posts
-          .each do |p|
-            expect(page).to have_text p.author.fullname
-            expect(page).to have_text p.content
-          end
+    context "When the User's friend's have posts" do
+      let!(:friends_posts) do
+        friends.each { |author|FactoryBot.create(:post, author: author) }
       end
-      user.posts.each { |p| expect(page).to have_text(p.content) }
+
+      context 'When the logged user has posts' do
+        let!(:user_posts) { FactoryBot.create(:post, author: user) }
+
+        describe 'Visit the post index page' do
+          before(:each) do
+            login_as(user, scope: :user)
+            visit posts_path
+          end
+
+          describe "display posts by the logged user's friends" do
+            let(:friends_posts) { Post.where(author: user.friends) }
+
+            it 'displays the author' do
+              friends_posts.each do |post|
+                expect(page).to have_text post.author.fullname
+              end
+            end
+
+            it 'displays the content' do
+              friends_posts.each do |post|
+                expect(page).to have_text post.author.fullname
+              end
+            end
+          end
+
+          describe 'display posts by the logged user' do
+            let(:logged_user_posts) { user.posts }
+
+            it 'displays the author' do
+              logged_user_posts.each do |post|
+                expect(page).to have_text post.author.fullname
+              end
+            end
+
+            it 'displays the content' do
+              logged_user_posts.each do |post|
+                expect(page).to have_text post.author.fullname
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  context 'With a user logged in' do
+    before(:each) do
+      login_as(user, scope: :user)
+      visit posts_path
     end
 
     scenario 'Create a comment on a post froma user page' do
@@ -45,7 +87,7 @@ RSpec.feature 'PostActions', type: :feature do
       let!(:comments) do
         FactoryBot.create_list(
           :post_action,
-          comment_quantity,
+          COMMENTS,
           post: post,
           user: user,
           action: :comment,

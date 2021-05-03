@@ -18,7 +18,7 @@ class Post < ApplicationRecord
     when count == 2
       "#{names.first} and #{names.second}"
     when count == 1
-      names.take
+      names.take(1)
     end
   end
 

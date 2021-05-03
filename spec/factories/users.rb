@@ -6,6 +6,14 @@ FactoryBot.define do
     sequence(:email) { |n| "test_user#{n}@domain.com" }
     password { 'f4k3p455w0rd' }
 
+    factory :user_with_friends do
+      transient { quantity { 3 } }
+
+      after(:create) do |user, evaluator|
+        create_list(:friendship, evaluator.quantity, user: user, status: :accepted)
+      end
+    end
+
     factory :user_with_posts do
       transient { posts_count { 2 } }
 
